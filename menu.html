@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsiv Navigation</title>
+    <style>
+        /* Base styles for header and navigation */
+        .body-menu {
+            font-family: Verdana;
+            z-index: 999;
+            margin: 0;
+            padding: 0;
+        }
+
+        .site-header {
+            background: #333333;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1366px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            z-index: 1000;
+            position: relative;
+        }
+
+        .logo img {
+            max-height: 50px;
+        }
+
+        .main-navigation {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            margin: 0 15px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #90B2BF;
+            transition: color 0.3s;
+            font-size: 24px;
+        }
+
+        .nav-menu a:hover {
+            color: #A9D4E4;
+        }
+
+        .nav-menu a:active {
+            color: #fafafa;
+        }
+
+        /* Style for the active menu item */
+        .nav-menu a.active {
+            color: #fafafa;
+        }
+
+        .cta-button {
+            background-color: #90B2BF;
+            color: #000000;
+            padding: 10px 20px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            text-decoration: none;
+            border-radius: 20px;
+            margin-left: 20px;
+            transition: background-color 0.3s;
+            font-size: 24px;
+        }
+
+        .cta-button:hover,
+        .cta-button:active {
+            background-color: #A9D4E4;
+            color: #000000 !important;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle .bar {
+            height: 3px;
+            width: 40px;
+            background-color: #fff;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(15px) rotate(45deg);
+        }
+
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        @media (max-width: 1024px) {
+            .site-header {
+                z-index: 10001;
+                background-color: #333333;
+            }
+
+            .logo img {
+                position: static;
+                max-height: 50px;
+            }
+
+            .main-navigation {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                background-color: #90B2BF;
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+                transition: transform 0.3s ease;
+                transform: translateX(-100%);
+                margin-top: 7%;
+            }
+
+            .main-navigation.active {
+                display: flex;
+                transform: translateX(0);
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-menu li {
+                margin: 10px 0;
+            }
+
+            .nav-menu a {
+                color: #000;
+                font-size: 30px;
+            }
+
+            .nav-menu a:hover,
+            .nav-menu a:active {
+                color: #fafafa;
+            }
+
+            .cta-button {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+                text-align: center;
+                font-size: 30px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body class="body-menu">
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="/">
+                    <img src="https://neandersen.dolma.dk/wp-content/uploads/2024/05/neandersen.dk-logo-negativ-nobg.png"
+                        alt="Logo">
+                </a>
+            </div>
+            <nav class="main-navigation">
+                <ul class="nav-menu">
+                    <li><a href="https://neandersen.dolma.dk/">Forside</a></li>
+                    <li><a href="https://neandersen.dolma.dk/ydelser/">Ydelser</a></li>
+                    <li><a href="https://neandersen.dolma.dk/priser-og-gavekort/">Priser & Gavekort</a></li>
+                    <li><a href="https://neandersen.dolma.dk/om%20os/">Om Os</a></li>
+                </ul>
+                <a href="http://neandersendk.planway.com" class="cta-button">Book Tid</a>
+            </nav>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navMenu = document.querySelector('.main-navigation');
+
+            mobileMenu.addEventListener('click', function () {
+                mobileMenu.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!navMenu.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    navMenu.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+
+            // Highlight the active menu item
+            const currentUrl = window.location.href;
+            const menuItems = document.querySelectorAll('.nav-menu a');
+
+            menuItems.forEach(item => {
+                if (item.href === currentUrl) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

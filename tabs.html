@@ -1,0 +1,108 @@
+/* Billede fremvisning af certifikator, som tabs og horizontal scroll. */
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Viewer with Tabs</title>
+    <style>
+        /* Styling for containeren af fanerne */
+        .tab-container {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        /* Styling for hver fane */
+        .tab {
+            flex: 0 0 auto;
+            margin: 10px;
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        /* Styling for billedfremviseren */
+        .image-viewer {
+            margin-top: 20px;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Styling for det viste billede */
+        #image-display {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+
+        /* Styling for den aktive fane */
+        .active-tab {
+            border-color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Container til fanerne -->
+    <div class="tab-container">
+        <!-- Hver fane med tilknyttet billede-URL -->
+        <div class="tab active-tab" id="tab1"
+            data-image="https://neandersen.dolma.dk/wp-content/uploads/2024/05/eksfysmas.webp">
+            Fys. Massør</div>
+        <div class="tab" data-image="https://neandersen.dolma.dk/wp-content/uploads/2024/05/massage.webp">
+            Massage</div>
+        <div class="tab" data-image="https://neandersen.dolma.dk/wp-content/uploads/2024/05/krops.webp">Kropsbeh.
+        </div>
+        <div class="tab" data-image="https://neandersen.dolma.dk/wp-content/uploads/2024/05/ergonomi.webp">Ergonomi
+        </div>
+        <div class="tab" data-image="https://neandersen.dolma.dk/wp-content/uploads/2024/05/trigger.webp">Triggerpkt.
+        </div>
+        <div class="tab" data-image="https://neandersen.dolma.dk/wp-content/uploads/2024/05/psykologi.webp">Psykologi
+        </div>
+        <div class="tab" data-image="https://neandersen.dolma.dk/wp-content/uploads/2024/05/badbeh.webp">Bad & Beh.
+        </div>
+        <div class="tab" data-image="https://neandersen.dolma.dk/wp-content/uploads/2024/05/spa.webp">Spa</div>
+        <div class="tab" data-image="https://neandersen.dolma.dk/wp-content/uploads/2024/05/ern.webp">Ernæring</div>
+    </div>
+    <div class="image-viewer">
+        <img id="image-display" src="https://yourwebsite.com/wp-content/uploads/2024/05/image1.jpg">
+    </div>
+
+    <!-- JavaScript-kode til at implementere funktionalitet -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Hent alle faner og billedfremviserens DOM-element
+            const tabs = document.querySelectorAll('.tab');
+            const imageDisplay = document.getElementById('image-display');
+
+            // Funktion til at skifte billedet
+            function switchImage(imageUrl) {
+                imageDisplay.src = imageUrl;
+            }
+
+            // Set den første fane som aktiv og vis dens billede som standard
+            const firstTab = document.getElementById('tab1');
+            const defaultImageUrl = firstTab.getAttribute('data-image');
+            switchImage(defaultImageUrl);
+            firstTab.classList.add('active-tab');
+
+            // Lyt efter klik på faner
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const imageUrl = tab.getAttribute('data-image');
+                    switchImage(imageUrl);
+
+                    // Highlight den aktive fane
+                    tabs.forEach(t => t.classList.remove('active-tab'));
+                    tab.classList.add('active-tab');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
